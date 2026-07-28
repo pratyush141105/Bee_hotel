@@ -1,0 +1,496 @@
+{
+  "info": {
+    "_postman_id": "hotel-bee-api-collection",
+    "name": "Hotel Bee API",
+    "description": "Complete API collection for Hotel Bee backend. Set BASE_URL environment variable to http://localhost:5000/api/v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "BASE_URL", "value": "http://localhost:5000/api/v1", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/health"
+      }
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@hotelbee.com\",\n  \"password\": \"HotelBee@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Current Admin",
+          "request": { "method": "GET", "url": "{{BASE_URL}}/auth/me" }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/auth/profile",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Admin Name\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/auth/change-password",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"HotelBee@123\",\n  \"newPassword\": \"NewSecurePass@2024\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "url": "{{BASE_URL}}/auth/logout" }
+        }
+      ]
+    },
+    {
+      "name": "Home",
+      "item": [
+        {
+          "name": "Get Home",
+          "request": { "method": "GET", "url": "{{BASE_URL}}/home" }
+        },
+        {
+          "name": "Update Home",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/home",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "tagline", "value": "Welcome to Hotel Bee", "type": "text" },
+                { "key": "subtitle", "value": "Experience luxury like never before", "type": "text" },
+                { "key": "heroImages", "type": "file", "src": [] }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "About",
+      "item": [
+        { "name": "Get About", "request": { "method": "GET", "url": "{{BASE_URL}}/about" } },
+        {
+          "name": "Update About",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/about",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"About Hotel Bee\",\n  \"since\": 2005,\n  \"mission\": \"To provide world-class hospitality.\",\n  \"vision\": \"To be the top hotel in the region.\",\n  \"services\": [\"Fine Dining\", \"Banquet Halls\", \"Catering\"]\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Restaurant - Categories",
+      "item": [
+        { "name": "List Categories", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/categories?page=1&limit=10" } },
+        { "name": "Get Category by ID", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/categories/CATEGORY_ID_HERE" } },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/restaurant/categories",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Starters", "type": "text" },
+                { "key": "displayOrder", "value": "1", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/restaurant/categories/CATEGORY_ID_HERE",
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "name", "value": "Updated Starters", "type": "text" }]
+            }
+          }
+        },
+        { "name": "Delete Category", "request": { "method": "DELETE", "url": "{{BASE_URL}}/restaurant/categories/CATEGORY_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Restaurant - Menu",
+      "item": [
+        { "name": "List Menu", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/menu?page=1&limit=20&veg=true" } },
+        { "name": "Featured Menu", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/menu/featured" } },
+        { "name": "Menu by Category", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/menu/category/CATEGORY_ID_HERE" } },
+        { "name": "Search Menu", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/menu?search=paneer" } },
+        { "name": "Get Menu Item", "request": { "method": "GET", "url": "{{BASE_URL}}/restaurant/menu/ITEM_ID_HERE" } },
+        {
+          "name": "Create Menu Item",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/restaurant/menu",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Paneer Tikka", "type": "text" },
+                { "key": "price", "value": "250", "type": "text" },
+                { "key": "categoryId", "value": "CATEGORY_ID_HERE", "type": "text" },
+                { "key": "veg", "value": "true", "type": "text" },
+                { "key": "featured", "value": "false", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        { "name": "Delete Menu Item", "request": { "method": "DELETE", "url": "{{BASE_URL}}/restaurant/menu/ITEM_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Banquet - Halls",
+      "item": [
+        { "name": "List Halls", "request": { "method": "GET", "url": "{{BASE_URL}}/banquet/halls" } },
+        { "name": "Get Hall", "request": { "method": "GET", "url": "{{BASE_URL}}/banquet/halls/HALL_ID_HERE" } },
+        {
+          "name": "Create Hall",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/banquet/halls",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Royal Hall", "type": "text" },
+                { "key": "capacity", "value": "500", "type": "text" },
+                { "key": "pricePerDay", "value": "50000", "type": "text" },
+                { "key": "amenities[0]", "value": "AC", "type": "text" },
+                { "key": "amenities[1]", "value": "Sound System", "type": "text" },
+                { "key": "images", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        { "name": "Delete Hall", "request": { "method": "DELETE", "url": "{{BASE_URL}}/banquet/halls/HALL_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Banquet - Bookings",
+      "item": [
+        {
+          "name": "Create Booking (Public)",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/banquet/book",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul Sharma\",\n  \"phone\": \"9876543210\",\n  \"email\": \"rahul@example.com\",\n  \"hall\": \"HALL_ID_HERE\",\n  \"eventType\": \"Wedding\",\n  \"date\": \"2025-12-15\",\n  \"time\": \"7:00 PM\",\n  \"numberOfGuests\": 200,\n  \"notes\": \"Veg only please\"\n}"
+            }
+          }
+        },
+        { "name": "List Bookings", "request": { "method": "GET", "url": "{{BASE_URL}}/banquet/bookings?status=Pending" } },
+        { "name": "Get Booking", "request": { "method": "GET", "url": "{{BASE_URL}}/banquet/bookings/BOOKING_ID_HERE" } },
+        { "name": "Approve Booking", "request": { "method": "PUT", "url": "{{BASE_URL}}/banquet/bookings/BOOKING_ID_HERE/approve" } },
+        { "name": "Reject Booking", "request": { "method": "PUT", "url": "{{BASE_URL}}/banquet/bookings/BOOKING_ID_HERE/reject" } },
+        { "name": "Complete Booking", "request": { "method": "PUT", "url": "{{BASE_URL}}/banquet/bookings/BOOKING_ID_HERE/complete" } },
+        { "name": "Delete Booking", "request": { "method": "DELETE", "url": "{{BASE_URL}}/banquet/bookings/BOOKING_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Catering - Packages",
+      "item": [
+        { "name": "List Packages", "request": { "method": "GET", "url": "{{BASE_URL}}/catering/packages" } },
+        { "name": "Get Package", "request": { "method": "GET", "url": "{{BASE_URL}}/catering/packages/SERVICE_ID_HERE" } },
+        {
+          "name": "Create Package",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/catering/packages",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Corporate Catering", "type": "text" },
+                { "key": "price", "value": "15000", "type": "text" },
+                { "key": "features[0]", "value": "Live counter", "type": "text" },
+                { "key": "images", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        { "name": "Delete Package", "request": { "method": "DELETE", "url": "{{BASE_URL}}/catering/packages/SERVICE_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Catering - Inquiries",
+      "item": [
+        {
+          "name": "Submit Catering Inquiry (Public)",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/catering/inquiry",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Rahul Sharma\",\n  \"phone\": \"9876543210\",\n  \"email\": \"rahul@example.com\",\n  \"eventDate\": \"2025-12-20\",\n  \"eventTime\": \"7:00 PM\",\n  \"location\": \"Bandra, Mumbai\",\n  \"numberOfGuests\": 150,\n  \"selectedPackage\": null,\n  \"foodRequirements\": \"Pure vegetarian\",\n  \"additionalRequirements\": \"Need a live counter\"\n}"
+            }
+          }
+        },
+        { "name": "List Inquiries (Admin)", "request": { "method": "GET", "url": "{{BASE_URL}}/catering/inquiries?status=Pending" } },
+        { "name": "Get Inquiry (Admin)", "request": { "method": "GET", "url": "{{BASE_URL}}/catering/inquiries/INQUIRY_ID_HERE" } },
+        { "name": "Confirm Inquiry", "request": { "method": "PUT", "url": "{{BASE_URL}}/catering/inquiries/INQUIRY_ID_HERE/confirm" } },
+        { "name": "Reject Inquiry", "request": { "method": "PUT", "url": "{{BASE_URL}}/catering/inquiries/INQUIRY_ID_HERE/reject" } },
+        { "name": "Complete Inquiry", "request": { "method": "PUT", "url": "{{BASE_URL}}/catering/inquiries/INQUIRY_ID_HERE/complete" } },
+        { "name": "Delete Inquiry", "request": { "method": "DELETE", "url": "{{BASE_URL}}/catering/inquiries/INQUIRY_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Gallery",
+      "item": [
+        { "name": "List Gallery", "request": { "method": "GET", "url": "{{BASE_URL}}/gallery?type=image" } },
+        { "name": "Search Gallery", "request": { "method": "GET", "url": "{{BASE_URL}}/gallery?search=wedding" } },
+        {
+          "name": "Upload Image",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/gallery",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "type", "value": "image", "type": "text" },
+                { "key": "title", "value": "Wedding Hall Setup", "type": "text" },
+                { "key": "category", "value": "Banquet", "type": "text" },
+                { "key": "media", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        { "name": "Delete Gallery Item", "request": { "method": "DELETE", "url": "{{BASE_URL}}/gallery/ITEM_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        { "name": "List Reviews (Public)", "request": { "method": "GET", "url": "{{BASE_URL}}/reviews?approved=true" } },
+        {
+          "name": "Add Review (Public)",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/reviews",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Priya Mehta\",\n  \"rating\": 5,\n  \"review\": \"Absolutely wonderful experience!\"\n}"
+            }
+          }
+        },
+        { "name": "Approve Review", "request": { "method": "PUT", "url": "{{BASE_URL}}/reviews/REVIEW_ID_HERE/approve" } },
+        { "name": "Delete Review", "request": { "method": "DELETE", "url": "{{BASE_URL}}/reviews/REVIEW_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        { "name": "List Events", "request": { "method": "GET", "url": "{{BASE_URL}}/events" } },
+        { "name": "Featured Events", "request": { "method": "GET", "url": "{{BASE_URL}}/events/featured" } },
+        { "name": "Upcoming Events", "request": { "method": "GET", "url": "{{BASE_URL}}/events/upcoming" } },
+        { "name": "Get Event", "request": { "method": "GET", "url": "{{BASE_URL}}/events/EVENT_ID_HERE" } },
+        { "name": "Check Event Availability (Public)", "request": { "method": "GET", "url": "{{BASE_URL}}/events/EVENT_ID_HERE/availability" } },
+        {
+          "name": "Register for Event (Public)",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/events/EVENT_ID_HERE/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Amit Singh\",\n  \"phone\": \"9876500000\",\n  \"email\": \"amit@example.com\",\n  \"numberOfGuests\": 2,\n  \"specialRequest\": \"Wheelchair accessible seating\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Event (Admin)",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/events",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "New Year Gala", "type": "text" },
+                { "key": "date", "value": "2025-12-31", "type": "text" },
+                { "key": "time", "value": "8:00 PM", "type": "text" },
+                { "key": "featured", "value": "true", "type": "text" },
+                { "key": "registrationEnabled", "value": "true", "type": "text" },
+                { "key": "maximumGuests", "value": "200", "type": "text" },
+                { "key": "registrationDeadline", "value": "2025-12-28", "type": "text" },
+                { "key": "banner", "type": "file", "src": [] }
+              ]
+            }
+          }
+        },
+        { "name": "Delete Event", "request": { "method": "DELETE", "url": "{{BASE_URL}}/events/EVENT_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Event - Registrations (Admin)",
+      "item": [
+        { "name": "List All Registrations", "request": { "method": "GET", "url": "{{BASE_URL}}/events/registrations?status=Pending" } },
+        { "name": "Filter by Event", "request": { "method": "GET", "url": "{{BASE_URL}}/events/registrations?eventId=EVENT_ID_HERE" } },
+        { "name": "Get Registration", "request": { "method": "GET", "url": "{{BASE_URL}}/events/registrations/REG_ID_HERE" } },
+        { "name": "Confirm Registration", "request": { "method": "PUT", "url": "{{BASE_URL}}/events/registrations/REG_ID_HERE/confirm" } },
+        { "name": "Cancel Registration", "request": { "method": "PUT", "url": "{{BASE_URL}}/events/registrations/REG_ID_HERE/cancel" } },
+        { "name": "Delete Registration", "request": { "method": "DELETE", "url": "{{BASE_URL}}/events/registrations/REG_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Managers",
+      "item": [
+        { "name": "List Managers", "request": { "method": "GET", "url": "{{BASE_URL}}/managers" } },
+        {
+          "name": "Create Manager",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/managers",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vikram Patel\",\n  \"department\": \"Front Desk\",\n  \"phone\": \"9876500001\",\n  \"email\": \"vikram@hotelbee.com\"\n}"
+            }
+          }
+        },
+        { "name": "Delete Manager", "request": { "method": "DELETE", "url": "{{BASE_URL}}/managers/MANAGER_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Branches",
+      "item": [
+        { "name": "List Branches", "request": { "method": "GET", "url": "{{BASE_URL}}/branches?isActive=true" } },
+        {
+          "name": "Create Branch",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/branches",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"branchName\": \"Hotel Bee - Andheri\",\n  \"address\": \"123 Andheri East, Mumbai\",\n  \"phone\": \"022-12345678\",\n  \"isActive\": true\n}"
+            }
+          }
+        },
+        { "name": "Delete Branch", "request": { "method": "DELETE", "url": "{{BASE_URL}}/branches/BRANCH_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Contact - Info",
+      "item": [
+        { "name": "Get Contact", "request": { "method": "GET", "url": "{{BASE_URL}}/contact" } },
+        {
+          "name": "Update Contact",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/contact",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hotelName\": \"Hotel Bee\",\n  \"address\": \"456 Marine Drive, Mumbai\",\n  \"phone\": [\"+91-22-12345678\"],\n  \"email\": [\"info@hotelbee.com\"],\n  \"workingHours\": [\n    { \"day\": \"Monday - Friday\", \"hours\": \"9 AM - 10 PM\" },\n    { \"day\": \"Saturday - Sunday\", \"hours\": \"8 AM - 11 PM\" }\n  ]\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact - Inquiries",
+      "item": [
+        {
+          "name": "Submit Inquiry (Public)",
+          "request": {
+            "method": "POST",
+            "url": "{{BASE_URL}}/contact/inquiry",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Sneha Kapoor\",\n  \"email\": \"sneha@example.com\",\n  \"phone\": \"9876511111\",\n  \"subject\": \"Wedding Package Inquiry\",\n  \"message\": \"Hi, I would like to know more about your wedding packages for a gathering of 300 guests.\"\n}"
+            }
+          }
+        },
+        { "name": "List Inquiries (Admin)", "request": { "method": "GET", "url": "{{BASE_URL}}/contact/inquiries?status=Unread" } },
+        { "name": "Get Inquiry (Admin)", "request": { "method": "GET", "url": "{{BASE_URL}}/contact/inquiries/INQUIRY_ID_HERE" } },
+        { "name": "Mark as Read", "request": { "method": "PUT", "url": "{{BASE_URL}}/contact/inquiries/INQUIRY_ID_HERE/read" } },
+        { "name": "Close Inquiry", "request": { "method": "PUT", "url": "{{BASE_URL}}/contact/inquiries/INQUIRY_ID_HERE/close" } },
+        { "name": "Delete Inquiry", "request": { "method": "DELETE", "url": "{{BASE_URL}}/contact/inquiries/INQUIRY_ID_HERE" } }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        { "name": "Get Settings", "request": { "method": "GET", "url": "{{BASE_URL}}/settings" } },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/settings",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"swiggyLink\": \"https://swiggy.com/...\",\n  \"zomatoLink\": \"https://zomato.com/...\",\n  \"darkModeDefault\": false,\n  \"websiteTitle\": \"Hotel Bee - Luxury Hotel\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Upload Logo",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/settings/logo",
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "logo", "type": "file", "src": [] }]
+            }
+          }
+        },
+        {
+          "name": "Upload QR Code",
+          "request": {
+            "method": "PUT",
+            "url": "{{BASE_URL}}/settings/qr",
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "qr", "type": "file", "src": [] }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard (Admin)",
+      "item": [
+        { "name": "Overview Summary", "request": { "method": "GET", "url": "{{BASE_URL}}/dashboard/overview" } },
+        { "name": "Booking Statistics", "request": { "method": "GET", "url": "{{BASE_URL}}/dashboard/bookings" } },
+        { "name": "Revenue Statistics", "request": { "method": "GET", "url": "{{BASE_URL}}/dashboard/revenue" } },
+        { "name": "Recent Activity", "request": { "method": "GET", "url": "{{BASE_URL}}/dashboard/recent" } },
+        { "name": "Chart Data", "request": { "method": "GET", "url": "{{BASE_URL}}/dashboard/charts" } }
+      ]
+    }
+  ]
+}
